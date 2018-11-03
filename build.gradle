@@ -1,0 +1,39 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.1'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    apkName = "OptimizeContacts"
+    compileSdk = 28
+    minSdk = 21
+    versionCode = 1
+    versionName = "0.1"
+    buildTools = "28.0.3"
+    supportLib = "27.1.1"
+    butterknifeLib = "8.8.0"
+    aviLoading = "2.1.3"
+    libPhone = "7.2.2"
+}

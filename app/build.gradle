@@ -1,0 +1,69 @@
+apply plugin: 'com.android.application'
+
+android {
+
+    compileSdkVersion rootProject.compileSdk
+    buildToolsVersion rootProject.buildTools
+
+    defaultConfig {
+        applicationId "com.kpgn.optimizecontacts"
+
+        minSdkVersion rootProject.minSdk
+        targetSdkVersion rootProject.compileSdk
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
+
+        setProperty("archivesBaseName", rootProject.apkName)
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("../play/optimize_contacts_keystore.jks")
+            storePassword 'Opt!mIzec0nt@cts'
+            keyAlias 'optimize_contacts'
+            keyPassword 'Opt!mIzec0nt@cts'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    def date = new Date();
+                    def formattedDate = date.format('ddMMyyyy_HHmm')
+                    outputFileName = "${rootProject.apkName}" + "_${variant.name}_v${variant.versionName}_d" + formattedDate + ".apk"
+                }
+            }
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
+        }
+    }
+
+    flavorDimensions "variants"
+    productFlavors {
+        ProdConfig {
+            dimension "variants"
+        }
+        DevConfig {
+            dimension "variants"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:appcompat-v7:$supportLib"
+    implementation "com.android.support:design:$supportLib"
+
+    implementation "com.jakewharton:butterknife:$butterknifeLib"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeLib"
+    implementation "com.wang.avi:library:$aviLoading"
+    implementation "com.googlecode.libphonenumber:libphonenumber:$libPhone"
+
+}
